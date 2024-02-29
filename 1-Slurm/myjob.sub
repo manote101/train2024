@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Job name:
+#SBATCH --job-name=gpu-job
+#
+# Account:
+# SBATCH --account=account_name
+#
+# Partition:
+#SBATCH --partition=defq
+#
+# Number of nodes:
+#SBATCH --nodes=1
+#
+# Number of tasks 
+#SBATCH --ntasks=1
+#
+# Processors per task:
+# Always at least twice the number of GPUs
+#SBATCH --cpus-per-task=1
+#
+#Number of GPUs, this can be in the format of "gpu:[1-4]"
+#SBATCH --gres=gpu:1
+#
+# Wall clock limit:
+#SBATCH --time=00:10:00
+#
+## Command(s) to run (example):
+echo "$SLURM_GPUS_ON_NODE GPU(s) are allocated for this job"
+echo
+nvidia-smi
+
