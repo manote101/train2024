@@ -10,8 +10,7 @@
 
 
 ## App Deployment
-### 1. Deploy in DGX host
-Start Flask and deploy modells -
+### Method#1: Deploy model in Flask on DGX host
 #### create Virtual Environement for Flask
 ```Shell
 python -m venv Flask
@@ -26,8 +25,8 @@ cd ~/train2024/5-Inference/flask
 curl -F "file=@test/eight.png" http://127.0.0.1:5000
 ```
 
-
-### Build Docker image
+### Method#2: Deploy model in Docker container
+### Build Docker image on your Docker server
 ```Shell
 cd cluster-demo/deployments/flask
 docker build -t flask_app . 
