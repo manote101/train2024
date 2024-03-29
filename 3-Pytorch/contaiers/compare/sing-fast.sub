@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Job name:
+#SBATCH --job-name=sing-fast
+#SBATCH --output=log-%x.%N.%J.out
+#SBATCH --error=log-%x.%N.%J.err
+
+#
+#SBATCH --partition=defq
+#
+#SBATCH --nodes=1
+#
+#SBATCH --ntasks=1
+#
+#SBATCH --cpus-per-task=2
+#
+#SBATCH --gres=gpu:7g.80gb:1
+#
+# Wall clock limit:
+#SBATCH --time=1:00:00
+#
+## Command(s) to run 
+
+# Make directory on scratch disk
+mkdir -p /raid/scratch/$USER
+mkdir -p /raid/scratch/$USER/LeNet5-MNIST-PyTorch
+
+# Move train & train data to scratch on NVMe (fast disks)
+mv train /raid/scratch/$USER/LeNet5-MNIST-PyTorch
+mv test /raid/scratch/$USER/LeNet5-MNIST-PyTorch
+
+module load singularity
+
+time singularity exec --nv -B /raid /raid/sif/pytorch-23.06.sif python mnist-train1.py --train_dir /raid/scratch/user03/LeNet5-MNIST-PyTorch/train --test_dir /raid/scratch/user03/LeNet5-MNIST-PyTorch/test

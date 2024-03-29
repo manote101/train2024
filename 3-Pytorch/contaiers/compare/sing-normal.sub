@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Define Job name and  Log fiile
+#SBATCH --job-name=sing-normal
+#SBATCH --output=log-%x.%N.%J.out
+#SBATCH --error=log-%x.%N.%J.err
+#
+#SBATCH --partition=defq
+#
+#SBATCH --nodes=1
+#
+#SBATCH --ntasks=1
+#
+#SBATCH --cpus-per-task=2
+#
+#SBATCH --gres=gpu:1
+#
+# Wall clock limit:
+#SBATCH --time=1:00:00
+#
+## Command(s) to run 
+
+
+## Clone Demo MNIST trainig in PyTorch
+#git clone https://github.com/ChawDoe/LeNet5-MNIST-PyTorch.git
+
+#cd LeNet5-MNIST-PyTorch
+
+# Module load Singurarity
+module load singularity
+
+# Count for training time
+time singularity exec --nv -B /raid /raid/sif/pytorch-23.06.sif python mnist-train1.py 
+
