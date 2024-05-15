@@ -22,7 +22,7 @@ srun --gpus=1 enroot start pyxis_pytorch nvidia-smi
 sbatch simple-pt.sub
 ```
 
-## Demo MNIST trainig in PyTorch
+## Method #1: Demo MNIST trainig in PyTorch
 ```Shell
 git clone https://github.com/ChawDoe/LeNet5-MNIST-PyTorch.git
 
@@ -30,4 +30,10 @@ cd LeNet5-MNIST-PyTorch
 srun --gpus=1 --container-image=/dataset/squashfs/nvidia+pytorch+23.01-py3.sqsh \
  --container-name=pytorch --container-workdir=$(pwd) \
  python train.py
+```
+
+## Method #2: Run Training with Singularity
+```Shell
+module load singularity
+time srun singularity run --nv -B /raid /raid/sif/pytorch-23.06.sif python train.py
 ```
